@@ -3,6 +3,8 @@ from typing import List
 import face_recognition
 import numpy as np
 import os
+from fastapi.middleware.cors import CORSMiddleware
+
 
 from app.utils import (
     load_image,
@@ -14,6 +16,15 @@ from app.utils import (
 from app.spoofing import is_real_face
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,  # Inseguro para las cookies cambiar luego a True y allow_origins=["https://www.xulur.com"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.post("/register")
 async def register_face(
